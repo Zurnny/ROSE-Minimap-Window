@@ -1,0 +1,657 @@
+<rml>
+
+    <head>
+        <title></title>
+        <link type="text/template" href="../templates/window-resizeable.html" />
+
+        <style>
+            body {
+                width: 210dp;
+            }
+
+            .title {
+                position: absolute;
+                display: inline-block;
+                width: 100%;
+                height: 40dp;
+                top: 0dp;
+                left: 0dp;
+                margin: 2dp;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            #minimap-root {
+                position: relative;
+                width: 206dp;
+            }
+
+            /* ── Minimized state ── */
+
+            #minimap-minimized {
+                position: relative;
+                width: 206dp;
+                height: 40dp;
+            }
+
+            #minimap-minimized .btn-restore {
+                position: absolute;
+                right: 6dp;
+                top: 9dp;
+                width: 29dp;
+                height: 25dp;
+                decorator: image(GEN_BTN04);
+            }
+            #minimap-minimized .btn-restore:hover {
+                decorator: image(GEN_BTN05);
+            }
+            #minimap-minimized .btn-restore:active {
+                decorator: image(GEN_BTN06);
+            }
+
+            #minimap-minimized #zone-name-min {
+                position: absolute;
+                left: 8dp;
+                top: 10dp;
+                width: 140dp;
+                height: 18dp;
+                font-weight: 800;
+                font-effect: outline(1dp black);
+                color: white;
+                text-align: center;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            #minimap-minimized #time-min {
+                position: absolute;
+                left: 40dp;
+                top: 25dp;
+                width: 80dp;
+                height: 14dp;
+                font-size: 12dp;
+                color: #ccc;
+                font-effect: outline(1dp black);
+                text-align: center;
+            }
+
+            #minimap-minimized .day-night-icon-min {
+                position: absolute;
+                right: 40dp;
+                top: 2dp;
+            }
+
+            /* ── Normal state ── */
+
+            #minimap-normal {
+                position: relative;
+                width: 206dp;
+                height: 210dp;
+            }
+
+            /* Zone name */
+            #zone-name {
+                position: absolute;
+                left: 10dp;
+                top: 12dp;
+                width: 160dp;
+                height: 18dp;
+                font-size: 12dp;
+                font-weight: 800;
+                font-effect: outline(1dp black);
+                color: white;
+                text-align: center;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            #minimap-frame {
+                position: absolute;
+                left: 0dp;
+                top: 0dp;
+                width: 219dp;
+                height: 219dp;
+                decorator: image(GEN_MINIMAP09);
+                pointer-events: none;
+            }
+
+            /* Minimap viewport */
+            #minimap-viewport {
+                position: absolute;
+                left: 33dp;
+                top: 33dp;
+                width: 142dp;
+                height: 142dp;
+                overflow: hidden;
+                clip: always;
+            }
+
+            #minimap-map {
+                position: relative;
+            }
+
+            #minimap-map img.map-image {
+                position: absolute;
+            }
+
+            #minimap-map img.npc-icon {
+                position: absolute;
+                transform: translate(-50%, -50%);
+            }
+
+            #minimap-map img.party-icon {
+                position: absolute;
+                transform: translate(-50%, -50%);
+            }
+
+            #minimap-map img.coord-indicator {
+                position: absolute;
+                transform: translate(-50%, -50%);
+            }
+
+            #minimap-map img.avatar-icon {
+                position: absolute;
+                transform: translate(-50%, -50%);
+            }
+
+            #minimap-map img.player-arrow {
+                position: absolute;
+            }
+
+            /* ── Buttons ── */
+            /* Minimize */
+            .btn-minimize {
+                position: absolute;
+                right: 6dp;
+                top: 9dp;
+                width: 29dp;
+                height: 25dp;
+                decorator: image(GEN_BTN07);
+            }
+            .btn-minimize:hover {
+                decorator: image(GEN_BTN08);
+            }
+            .btn-minimize:active {
+                decorator: image(GEN_BTN09);
+            }
+
+            /* World Map */
+            .btn-worldmap {
+                position: absolute;
+                left: 12dp;
+                top: 34dp;
+                width: 43dp;
+                height: 43dp;
+                decorator: image(GEN_DECO55);
+            }
+            .btn-worldmap:hover {
+                opacity: 0.8;
+            }
+            .btn-worldmap:active {
+                opacity: 0.6;
+            }
+
+            /* Day/Night indicator */
+            .day-night-icon {
+                position: absolute;
+                right: 3dp;
+                top: 34dp;
+            }
+
+            /* Game Arena */
+            .btn-gamearena {
+                position: absolute;
+                left: 7dp;
+                top: 75dp;
+                width: 30dp;
+                height: 30dp;
+                decorator: image(button-scoreboard-n);
+            }
+            .btn-gamearena:hover {
+                opacity: 0.8;
+            }
+            .btn-gamearena:active {
+                opacity: 0.6;
+            }
+
+            /* Giftbox Notice */
+            .btn-giftbox {
+                position: absolute;
+                left: 0dp;
+                top: 128dp;
+                width: 43dp;
+                height: 43dp;
+                decorator: image(GEN_BTN106);
+            }
+            .btn-giftbox:hover {
+                decorator: image(GEN_BTN107);
+            }
+            .btn-giftbox:active {
+                decorator: image(GEN_BTN108);
+            }
+
+            @keyframes giftbox-blink {
+                0% { decorator: image(GEN_BTN106); }
+                50% { decorator: image(GEN_BTN109); }
+                100% { decorator: image(GEN_BTN106); }
+            }
+            .btn-giftbox.blink {
+                animation: giftbox-blink 1s infinite;
+            }
+
+            /* Giftbox Tooltip */
+            #giftbox-tooltip {
+                position: absolute;
+                left: -177dp;
+                top: 133dp;
+                width: 182dp;
+                height: 29dp;
+            }
+            #giftbox-tooltip-bg {
+                width: 182dp;
+                height: 29dp;
+                decorator: image(GEN_DECO65);
+            }
+            
+            #giftbox-tooltip-text {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 178dp;
+                height: 29dp;
+                font-size: 12dp;
+                font-weight: 800;
+                color: white;
+                text-align: center;
+                vertical-align: middle;
+                line-height: 29dp;
+            }
+
+            /* Item Mall */
+            .btn-itemmall {
+                position: absolute;
+                left: 24dp;
+                bottom: 5dp;
+                width: 43dp;
+                height: 43dp;
+                decorator: image(GEN_BTN82);
+            }
+            .btn-itemmall:hover {
+                decorator: image(GEN_BTN83);
+            }
+            .btn-itemmall:active {
+                decorator: image(GEN_BTN84);
+            }
+
+            /* Zoom buttons */
+            .btn-zoomin {
+                position: absolute;
+                right: 15dp;
+                bottom: 62dp;
+                width: 20dp;
+                height: 20dp;
+                decorator: image(GEN_BTN85);
+            }
+            .btn-zoomin:hover {
+                decorator: image(GEN_BTN86);
+            }
+            .btn-zoomin:active {
+                decorator: image(GEN_BTN87);
+            }
+
+            .btn-zoomout {
+                position: absolute;
+                right: 28dp;
+                bottom: 40dp;
+                width: 20dp;
+                height: 20dp;
+                decorator: image(GEN_BTN88);
+            }
+            .btn-zoomout:hover {
+                decorator: image(GEN_BTN89);
+            }
+            .btn-zoomout:active {
+                decorator: image(GEN_BTN90);
+            }
+
+            /* Coordinates */
+            #coordinates-text {
+                position: absolute;
+                left: 71dp;
+                bottom: 28dp;
+                width: 67dp;
+                height: 14dp;
+                font-size: 12dp;
+                font-weight: 800;
+                color: #ccc;
+                font-effect: outline(1dp black);
+                text-align: center;
+            }
+
+            /* Time */
+            #time-area {
+                position: absolute;
+                left: 71dp;
+                bottom: 12dp;
+                width: 67dp;
+                height: 14dp;
+                text-align: center;
+            }
+
+            #time-text {
+                width: 67dp;
+                height: 14dp;
+                font-size: 12dp;
+                font-weight: 800;
+                color: #ccc;
+                font-effect: outline(1dp black);
+                text-align: center;
+            }
+
+            /* ── Tooltips ── */
+            .minimap-tooltip {
+                display: none;
+                position: absolute;
+                background-color: #000000a3;
+                padding: 3dp 6dp;
+                color: white;
+                white-space: nowrap;
+                font-effect: none;
+            }
+
+            .btn-worldmap:hover > .minimap-tooltip,
+            .btn-itemmall:hover > .minimap-tooltip,
+            #time-area:hover > .minimap-tooltip {
+                display: block;
+            }
+
+            .minimap-tooltip-left {
+                top: 50%;
+                left: 0;
+                transform: translate(-100%, -50%);
+                margin-left: -4dp;
+                width: 100dp;
+            }
+
+            #time-tooltip {
+                width: 200dp;
+                bottom: -400%;
+                left: 50%;
+                transform: translateX(-50%);
+                margin-bottom: 4dp;
+                font-size: 13dp;
+                text-align: left;
+            }
+
+            .time-tooltip-label {
+                color: #90c8ff;
+            }
+
+
+            /* ── Minimap Window add-on: an empty see-through window under the minimized bar ── */
+            #sp-pad {
+                position: absolute;
+                left: 0dp;
+                top: 46dp;
+                width: 206dp;
+                height: 120dp;
+                box-sizing: border-box;
+                border: 1dp rgba(150, 150, 150, 120);
+                border-radius: 3dp;
+                background-color: rgba(0, 0, 0, 100);
+                pointer-events: none;      /* clicks go through to the game */
+            }
+            #sp-pad.off { display: none; }
+            #sp-pad-gear {
+                position: absolute;
+                right: 3dp;
+                top: 3dp;
+                width: 20dp;
+                height: 19dp;
+                decorator: image(button-settings-n);
+                opacity: 0.6;
+                pointer-events: auto;
+                cursor: hand;
+            }
+            #sp-pad-gear:hover { decorator: image(button-settings-h); opacity: 1; }
+            #sp-pad-gear:active { decorator: image(button-settings-a); }
+            #sp-pad-options {
+                display: none;
+                position: absolute;
+                right: -4dp;
+                top: 24dp;
+                z-index: 10;
+                width: 196dp;
+                padding: 6dp 8dp 8dp 8dp;
+                box-sizing: border-box;
+                background-color: rgba(0, 0, 0, 225);
+                border: 1dp rgb(150, 150, 150);
+                border-radius: 3dp;
+                font-size: 12dp;
+                color: white;
+                font-effect: outline(1dp black);
+                pointer-events: auto;
+            }
+            #sp-pad-options.open { display: block; }
+            #sp-pad-options .sp-pad-title { display: block; font-weight: 800; color: yellow; margin-bottom: 4dp; }
+            #sp-pad-options .sp-pad-row { display: block; margin-top: 4dp; }
+            #sp-pad-options .sp-pad-row input.range { width: 100%; }
+            #sp-pad-options .sp-pad-val { color: #ccc; }
+            #sp-pad-close { position: absolute; right: 4dp; top: 4dp; cursor: hand; color: #ccc; font-weight: 800; }
+            #sp-pad-close:hover { color: white; }
+        </style>
+        <script>
+-- Minimap Window (add-on). While the minimap is minimized, an empty see-through
+-- window sits under the zone name and time. The gear on it opens a small panel
+-- to set its opacity (0% = clear, 100% = solid) and size. Saved in sp_minimap_window.txt.
+pcall(function()
+    local document = document
+    local FILE = 'sp_minimap_window.txt'
+    local cfg = {alpha = 40, height = 120, width = 206}   -- alpha: 0 = clear .. 100 = solid
+    pcall(function()
+        local f = io.open(FILE, 'r')
+        if not f then return end
+        for line in f:lines() do
+            local k, v = line:match('^%s*(%w+)%s*=%s*(%d+)')
+            if k and cfg[k] then cfg[k] = tonumber(v) end
+        end
+        f:close()
+    end)
+    local function clamp(v, lo, hi) v = tonumber(v) or lo; return math.max(lo, math.min(hi, v)) end
+    cfg.alpha, cfg.height, cfg.width = clamp(cfg.alpha, 0, 100), clamp(cfg.height, 30, 400), clamp(cfg.width, 100, 400)
+    local function el(id) return document:GetElementById(id) end
+    local function save()
+        pcall(function()
+            local f = io.open(FILE, 'w')
+            if not f then return end
+            f:write('alpha=', cfg.alpha, '\nheight=', cfg.height, '\nwidth=', cfg.width, '\n')
+            f:close()
+        end)
+    end
+    local function set_text(id, text)
+        local e = el(id)
+        if e and e:GetAttribute('sp-text') ~= text then e.inner_rml = text; e:SetAttribute('sp-text', text) end
+    end
+    local function apply()
+        local pad = el('sp-pad')
+        if not pad then return end
+        local a = math.floor(cfg.alpha * 255 / 100 + 0.5)
+        pad.style['background-color'] = 'rgba(0, 0, 0, ' .. a .. ')'
+        pad.style['border-color'] = 'rgba(150, 150, 150, ' .. math.max(40, a) .. ')'
+        pad.style.height = cfg.height .. 'dp'
+        pad.style.width = cfg.width .. 'dp'
+        set_text('sp-pad-alpha-val', cfg.alpha .. '%')
+        set_text('sp-pad-height-val', cfg.height .. '')
+        set_text('sp-pad-width-val', cfg.width .. '')
+    end
+    local function hook_slider(id, key)
+        local s = el(id)
+        if not s then return end
+        s:SetAttribute('value', tostring(cfg[key]))
+        s:AddEventListener('change', function()
+            cfg[key] = tonumber(s:GetAttribute('value')) or cfg[key]
+            apply(); save()
+        end)
+    end
+    hook_slider('sp-pad-alpha', 'alpha')
+    hook_slider('sp-pad-height', 'height')
+    hook_slider('sp-pad-width', 'width')
+    local gear, panel = el('sp-pad-gear'), el('sp-pad-options')
+    if gear and panel then
+        gear:AddEventListener('click', function(ev)
+            panel:SetClass('open', not panel:IsClassSet('open'))
+            ev:StopPropagation()
+        end)
+    end
+    local close = el('sp-pad-close')
+    if close and panel then close:AddEventListener('click', function(ev) panel:SetClass('open', false); ev:StopPropagation() end) end
+    apply()
+end)
+        </script>
+    </head>
+
+    <body id="game-minimap">
+        <div id="minimap-root" data-model="minimap">
+            <!-- ─── Minimized state ─── -->
+            <div id="minimap-minimized" data-class-hidden="!is_minimized">
+                <handle move_target="#document" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%;"></handle>
+                <span id="zone-name-min">{{zone_name}}</span>
+                <span id="time-min">{{server_time}}</span>
+                <button class="btn-restore" data-event-click="toggle_minimize"></button>
+                <!-- Minimap Window add-on: empty see-through window; the gear opens its settings -->
+                <div id="sp-pad">
+                    <button id="sp-pad-gear"></button>
+                    <div id="sp-pad-options">
+                        <span id="sp-pad-close">x</span>
+                        <span class="sp-pad-title">Window settings</span>
+                        <div class="sp-pad-row">Opacity: <span class="sp-pad-val" id="sp-pad-alpha-val">40%</span></div>
+                        <input id="sp-pad-alpha" type="range" min="0" max="100" step="5" value="40" />
+                        <div class="sp-pad-row">Height: <span class="sp-pad-val" id="sp-pad-height-val">120</span></div>
+                        <input id="sp-pad-height" type="range" min="30" max="400" step="10" value="120" />
+                        <div class="sp-pad-row">Width: <span class="sp-pad-val" id="sp-pad-width-val">206</span></div>
+                        <input id="sp-pad-width" type="range" min="100" max="400" step="10" value="206" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── Normal state ─── -->
+            <div id="minimap-normal" data-class-hidden="is_minimized">
+                <!-- Map Viewport -->
+                <masked id="minimap-viewport" mask-radius="50%">
+                    <div id="minimap-map" data-style-width="map_width + 'dp'" data-style-height="map_height + 'dp'"
+                         data-style-left="map_left + 'px'" data-style-top="map_top + 'px'">
+                        <img id="minimap-map-image"
+                             class="map-image"
+                             data-attr-src="map_texture_source"
+                             data-style-width="map_width + 'dp'" data-style-height="map_height + 'dp'"
+                        ></img>
+
+                        <img
+                             id="npc-icon"
+                             class="npc-icon"
+                             data-for="npc : npc_indicators"
+                             data-attr-sprite="npc.icon_sprite"
+                             data-attr-npc_id="npc.npc_id"
+                             data-attr-quest_signal="npc.quest_signal"
+                             data-style-left="round(zoom_level * npc.map_position.x) + 'dp'"
+                             data-style-top="round(zoom_level * npc.map_position.y) + 'dp'"
+                             style="position: absolute; transform: translate(-50%, -50%);"
+                        ></img>
+
+                        <img 
+                             id="party-member"
+                             class="party-icon"
+                             data-for="member : party_members"
+                             data-if="member.is_visible"
+                             data-attr-name="member.name"
+                             sprite="map-party-member"
+                             data-style-left="round(zoom_level * member.map_position.x) + 'dp'"
+                             data-style-top="round(zoom_level * member.map_position.y) + 'dp'"
+                             style="position: absolute; transform: translate(-50%, -50%);"
+                        ></img>
+
+                        <img class="coord-indicator"
+                             data-for="coord : coordinate_indicators"
+                             sprite="map-highlight"
+                             data-style-left="round(zoom_level * coord.map_position.x) + 'dp'"
+                             data-style-top="round(zoom_level * coord.map_position.y) + 'dp'"
+                             style="position: absolute; transform: translate(-50%, -50%);"
+                        ></img>
+
+                        <img class="avatar-icon"
+                             data-for="avatar : avatars"
+                             data-attr-sprite="avatar.icon_sprite"
+                             data-style-left="round(zoom_level * avatar.map_position.x) + 'dp'"
+                             data-style-top="round(zoom_level * avatar.map_position.y) + 'dp'"
+                             style="position: absolute; transform: translate(-50%, -50%);"
+                        ></img>
+
+                        <img class="player-arrow"
+                             src="/3DData/Control/Res/MiniMap_Arrow.tga"
+                             data-style-left="round(zoom_level * player.map_position.x) + 'dp'"
+                             data-style-top="round(zoom_level * player.map_position.y) + 'dp'"
+                             data-style-transform="'translate(-50%, -50%) rotate(' + player.direction + ' rad)'"
+                        ></img>
+                    </div>
+                </masked>
+
+                <!-- Decorative frame overlay -->
+                <div id="minimap-frame"></div>
+
+                <handle class="title" move_target="#document">
+                    <span id="zone-name">{{zone_name}}</span>
+                </handle>
+
+                <!-- Minimize button -->
+                <button class="btn-minimize" data-event-click="toggle_minimize"></button>
+
+                <!-- World Map button -->
+                <button class="btn-worldmap" onclick="open_worldmap">
+                    <span class="minimap-tooltip minimap-tooltip-left" style="width: 80dp;">World Map</span>
+                </button>
+
+                <!-- Day/Night -->
+                <img data-if="!is_day" sprite="GEN_DECO09" class="day-night-icon"/>
+                <img data-if="is_day" sprite="GEN_DECO10" class="day-night-icon"/>
+
+                <!-- Game Arena button -->
+                <button id="game-arena" class="btn-gamearena" data-if="show_game_arena" onclick="open_gamearena"></button>
+                <!-- Giftbox Notice button -->
+                <button class="btn-giftbox blink" data-if="show_giftbox" onclick="open_giftbox"></button>
+
+                <!-- Giftbox tooltip -->
+                <div id="giftbox-tooltip" data-if="show_giftbox_tooltip">
+                    <div id="giftbox-tooltip-bg"></div>
+                    <span id="giftbox-tooltip-text"><str string-id="1253"></str></span>
+                </div>
+
+                <!-- Item Mall button -->
+                <button class="btn-itemmall" onclick="open_itemmall">
+                    <div class="minimap-tooltip minimap-tooltip-left">
+                        <span style="color: rgb(131, 147, 202)"><b><str string-id="795">Item Mall</str></b></span><br/>
+                        <span>Alt + B</span>
+                    </div>
+                </button>
+
+                <!-- Zoom controls -->
+                <button class="btn-zoomin" data-event-click="zoom_in" onmouseup="update_map_position"></button>
+                <button class="btn-zoomout" data-event-click="zoom_out"></button>
+
+                <!-- Coordinates -->
+                <span id="coordinates-text">{{player_coordinates}}</span>
+
+                <!-- Time -->
+                <div id="time-area">
+                    <span id="time-text">{{server_time}}</span>
+                    <div id="time-tooltip" class="minimap-tooltip">
+                        <span class="time-tooltip-label">Local Time: </span><span>{{local_time}}</span><br/>
+                        <span class="time-tooltip-label">Server Time: </span><span>{{server_time}} {{server_time_gap_text}}</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </body>
+</rml>
