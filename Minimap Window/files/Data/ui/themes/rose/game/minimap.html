@@ -444,7 +444,7 @@
             #sp-el-chart { display: block; padding: 4dp 6dp 4dp 6dp; font-size: 11dp; color: white; font-effect: outline(1dp black); }
             #sp-pad.no-chart #sp-el-chart { display: none; }
             .sp-el-row { display: flex; flex-direction: row; align-items: center; height: 18dp; border-top: 1dp rgba(150, 150, 150, 50); }
-            .sp-el-head { border-top: 0; font-weight: 800; color: yellow; margin-right: 22dp; }   /* clear of the gear */
+            .sp-el-head { border-top: 0; font-weight: 800; color: yellow; height: 20dp; }   /* the top line, beside the gear */
             .sp-el-head .sp-el-col.strong { color: rgb(110, 230, 110); }
             .sp-el-head .sp-el-col.weak { color: rgb(255, 100, 90); }
             .sp-el-who { display: flex; flex-direction: row; align-items: center; width: 66dp; flex-shrink: 0; }
@@ -557,7 +557,7 @@ end)
                     <!-- Element chart: each element, what it is strong against and what it is weak against
                          (the same lists as the game's monster info tooltip) -->
                     <div id="sp-el-chart">
-                        <div class="sp-el-row sp-el-head"><div class="sp-el-who">Element</div><div class="sp-el-col strong">Strong</div><div class="sp-el-split"></div><div class="sp-el-col weak">Weak</div></div>
+                        <div class="sp-el-row sp-el-head"><div class="sp-el-who"><span>Element</span></div><div class="sp-el-col strong"><span>Strong</span></div><div class="sp-el-split"></div><div class="sp-el-col weak"><span>Weak</span></div></div>
                         <div class="sp-el-row"><div class="sp-el-who"><span class="sp-el-ic big sp-el-5"></span><span class="sp-el-name elementicon-l-5">Wind</span></div><div class="sp-el-col"><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-7"></span></div><div class="sp-el-split"></div><div class="sp-el-col"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-6"></span></div></div>
                         <div class="sp-el-row"><div class="sp-el-who"><span class="sp-el-ic big sp-el-4"></span><span class="sp-el-name elementicon-l-4">Earth</span></div><div class="sp-el-col"><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-6"></span></div><div class="sp-el-split"></div><div class="sp-el-col"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-8"></span></div></div>
                         <div class="sp-el-row"><div class="sp-el-who"><span class="sp-el-ic big sp-el-2"></span><span class="sp-el-name elementicon-l-2">Fire</span></div><div class="sp-el-col"><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-8"></span></div><div class="sp-el-split"></div><div class="sp-el-col"><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-6"></span><span class="sp-el-ic sp-el-7"></span></div></div>
