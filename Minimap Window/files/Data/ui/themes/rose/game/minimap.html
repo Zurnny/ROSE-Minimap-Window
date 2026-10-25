@@ -445,7 +445,7 @@
         <script>
 -- Minimap Window (add-on). While the minimap is minimized, an empty see-through
 -- window sits under the zone name and time. The gear on it opens a small panel
--- to set its opacity (0% = clear, 100% = solid) and size. Saved in sp_minimap_window.txt.
+-- to set its opacity (0% = clear, 100% = solid) and height. Saved in sp_minimap_window.txt.
 pcall(function()
     local document = document
     local FILE = 'sp_minimap_window.txt'
@@ -466,7 +466,7 @@ pcall(function()
         pcall(function()
             local f = io.open(FILE, 'w')
             if not f then return end
-            f:write('alpha=', cfg.alpha, '\nheight=', cfg.height, '\nwidth=', cfg.width, '\n')
+            f:write('alpha=', cfg.alpha, '\nheight=', cfg.height, '\n')
             f:close()
         end)
     end
@@ -481,23 +481,20 @@ pcall(function()
         pad.style['background-color'] = 'rgba(0, 0, 0, ' .. a .. ')'
         pad.style['border-color'] = 'rgba(150, 150, 150, ' .. math.max(40, a) .. ')'
         pad.style.height = cfg.height .. 'dp'
-        pad.style.width = cfg.width .. 'dp'
-        set_text('sp-pad-alpha-val', cfg.alpha .. '%')
-        set_text('sp-pad-height-val', cfg.height .. '')
-        set_text('sp-pad-width-val', cfg.width .. '')
+        set_text('sp-pad-alpha-val', string.format('%d%%', cfg.alpha))
+        set_text('sp-pad-height-val', string.format('%d', cfg.height))
     end
     local function hook_slider(id, key)
         local s = el(id)
         if not s then return end
         s:SetAttribute('value', tostring(cfg[key]))
         s:AddEventListener('change', function()
-            cfg[key] = tonumber(s:GetAttribute('value')) or cfg[key]
+            cfg[key] = math.floor((tonumber(s:GetAttribute('value')) or cfg[key]) + 0.5)
             apply(); save()
         end)
     end
     hook_slider('sp-pad-alpha', 'alpha')
     hook_slider('sp-pad-height', 'height')
-    hook_slider('sp-pad-width', 'width')
     local gear, panel = el('sp-pad-gear'), el('sp-pad-options')
     if gear and panel then
         gear:AddEventListener('click', function(ev)
@@ -530,8 +527,6 @@ end)
                         <input id="sp-pad-alpha" type="range" min="0" max="100" step="5" value="40" />
                         <div class="sp-pad-row">Height: <span class="sp-pad-val" id="sp-pad-height-val">120</span></div>
                         <input id="sp-pad-height" type="range" min="30" max="400" step="10" value="120" />
-                        <div class="sp-pad-row">Width: <span class="sp-pad-val" id="sp-pad-width-val">206</span></div>
-                        <input id="sp-pad-width" type="range" min="100" max="400" step="10" value="206" />
                     </div>
                 </div>
             </div>

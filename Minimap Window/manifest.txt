@@ -1,4 +1,4 @@
 ; Update list for Minimap Window. Upload this next to mod.ini and the files folder.
-version=1.0
-d764519e9d21bd11af80ebab8ae07f4d8d0be717|files/Data/ui/themes/rose/game/minimap.html
-4ae4edb1e75b43bd9d8e5f619645874ffe525793|mod.ini
+version=1.1
+f24241bec2de25d0cfe222a58bfc4f032959b8d3|files/Data/ui/themes/rose/game/minimap.html
+1e41d3dbde533e78076edd87488b17097424b089|mod.ini

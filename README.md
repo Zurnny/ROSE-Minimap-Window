@@ -4,7 +4,7 @@ While the minimap is minimized, an empty see-through window sits under the zone 
 
 Press the small gear on it for its settings:
 - **Opacity**: 0% is fully clear, 100% is solid.
-- **Height** and **Width**.
+- **Height**.
 
 Settings are saved in `sp_minimap_window.txt` in the game folder.
 
