@@ -397,7 +397,7 @@
                 left: 0dp;
                 top: 46dp;
                 width: 206dp;
-                height: 120dp;
+                height: 172dp;             /* just fits the element chart */
                 box-sizing: border-box;
                 border: 1dp rgba(150, 150, 150, 120);
                 border-radius: 3dp;
@@ -472,7 +472,7 @@
 -- Minimap Window (add-on). While the minimap is minimized, an empty see-through
 -- window sits under the zone name and time, with an element chart (each
 -- element, what it is strong and weak against - the game's monster info lists). The gear on it opens a small panel
--- to set its opacity (0% = clear, 100% = solid) and height. Saved in sp_minimap_window.txt.
+-- to set its opacity (0% = clear, 100% = solid) and whether the element chart shows. Saved in sp_minimap_window.txt.
 pcall(function()
     local document = document
     local FILE = 'sp_minimap_window.txt'
@@ -493,7 +493,7 @@ pcall(function()
         pcall(function()
             local f = io.open(FILE, 'w')
             if not f then return end
-            f:write('alpha=', cfg.alpha, '\nheight=', cfg.height, '\nchart=', cfg.chart, '\n')
+            f:write('alpha=', cfg.alpha, '\nchart=', cfg.chart, '\n')
             f:close()
         end)
     end
@@ -507,10 +507,8 @@ pcall(function()
         local a = math.floor(cfg.alpha * 255 / 100 + 0.5)
         pad.style['background-color'] = 'rgba(0, 0, 0, ' .. a .. ')'
         pad.style['border-color'] = 'rgba(150, 150, 150, ' .. math.max(40, a) .. ')'
-        pad.style.height = cfg.height .. 'dp'
         pad:SetClass('no-chart', cfg.chart == 0)
         set_text('sp-pad-alpha-val', string.format('%d%%', cfg.alpha))
-        set_text('sp-pad-height-val', string.format('%d', cfg.height))
     end
     local function hook_slider(id, key)
         local s = el(id)
@@ -522,7 +520,6 @@ pcall(function()
         end)
     end
     hook_slider('sp-pad-alpha', 'alpha')
-    hook_slider('sp-pad-height', 'height')
     local box = el('sp-pad-chart')
     if box then
         if cfg.chart == 0 then box:RemoveAttribute('checked') else box:SetAttribute('checked', '') end
@@ -574,8 +571,6 @@ end)
                         <span class="sp-pad-title">Window settings</span>
                         <div class="sp-pad-row">Opacity: <span class="sp-pad-val" id="sp-pad-alpha-val">40%</span></div>
                         <input id="sp-pad-alpha" type="range" min="0" max="100" step="5" value="40" />
-                        <div class="sp-pad-row">Height: <span class="sp-pad-val" id="sp-pad-height-val">190</span></div>
-                        <input id="sp-pad-height" type="range" min="30" max="400" step="10" value="190" />
                         <div class="sp-pad-row"><input id="sp-pad-chart" type="checkbox" checked="" /><label for="sp-pad-chart">Show element chart</label></div>
                     </div>
                 </div>

@@ -6,7 +6,6 @@ Inside it is an **element chart**: each element (Sorcery, Fire, Water, Earth, Wi
 
 Press the small gear on it for its settings:
 - **Opacity**: 0% is fully clear, 100% is solid.
-- **Height**.
 - **Show element chart** on or off.
 
 Settings are saved in `sp_minimap_window.txt` in the game folder.
