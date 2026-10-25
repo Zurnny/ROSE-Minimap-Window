@@ -397,7 +397,7 @@
                 left: 0dp;
                 top: 46dp;
                 width: 206dp;
-                height: 172dp;             /* just fits the element chart */
+                height: 344dp;             /* just fits the element chart */
                 box-sizing: border-box;
                 border: 1dp rgba(150, 150, 150, 120);
                 border-radius: 3dp;
@@ -440,22 +440,23 @@
             #sp-pad-options .sp-pad-row { display: block; margin-top: 4dp; }
             #sp-pad-options .sp-pad-row input.range { width: 100%; }
             #sp-pad-options .sp-pad-val { color: #ccc; }
-            /* element chart */
-            #sp-el-chart { display: block; padding: 6dp 6dp 4dp 6dp; font-size: 11dp; color: white; font-effect: outline(1dp black); }
+            /* element chart: each element, then "Strong" and "Weak" lines with the icons of the other elements */
+            #sp-el-chart { display: block; padding: 4dp 6dp 4dp 6dp; font-size: 11dp; color: white; font-effect: outline(1dp black); }
             #sp-pad.no-chart #sp-el-chart { display: none; }
-            .sp-el-head, .sp-el-row { display: flex; flex-direction: row; align-items: center; height: 18dp; }
-            .sp-el-head { height: 16dp; font-weight: 800; color: #ccc; margin-right: 22dp; }   /* clear of the gear */
-            .sp-el-name { width: 66dp; flex-shrink: 0; font-weight: 800; white-space: nowrap; overflow: hidden; }
-            .sp-el-row .sp-el-name { width: 48dp; }
-            .sp-el-list { display: flex; flex-direction: row; align-items: center; width: 64dp; flex-shrink: 0; }
-            .sp-el-list + .sp-el-list { width: 52dp; }
+            .sp-el-head { display: block; height: 18dp; line-height: 18dp; font-weight: 800; color: yellow; margin-right: 24dp; }
+            .sp-el-block { display: flex; flex-direction: row; align-items: center; height: 32dp; margin-bottom: 2dp; border-top: 1dp rgba(150, 150, 150, 60); }
+            .sp-el-who { display: flex; flex-direction: row; align-items: center; width: 74dp; flex-shrink: 0; }
+            .sp-el-name { font-weight: 800; white-space: nowrap; }
             .sp-el-name.elementicon-l-4 { color: rgb(200, 140, 80); }   /* Earth: the game's brown is too dark here */
             .sp-el-name.elementicon-l-8 { color: rgb(170, 170, 170); }
-            .sp-el-head .sp-el-list.strong { width: 64dp; }
-            .sp-el-head .sp-el-list.strong { color: rgb(110, 230, 110); }
-            .sp-el-head .sp-el-list.weak { color: rgb(255, 100, 90); }
+            .sp-el-lines { display: block; flex: 1; }
+            .sp-el-line { display: flex; flex-direction: row; align-items: center; height: 15dp; }
+            .sp-el-lbl { width: 40dp; flex-shrink: 0; font-weight: 700; }
+            .sp-el-lbl.strong { color: rgb(110, 230, 110); }
+            .sp-el-lbl.weak { color: rgb(255, 100, 90); }
+            .sp-el-none { color: #aaa; }
             .sp-el-ic { display: inline-block; width: 15dp; height: 14dp; margin-right: 1dp; flex-shrink: 0; }
-            .sp-el-ic.big { width: 17dp; height: 16dp; margin-right: 3dp; }
+            .sp-el-ic.big { width: 20dp; height: 19dp; margin-right: 4dp; }
             .sp-el-0 { decorator: image(elementicon-l-0); }
             .sp-el-1 { decorator: image(elementicon-l-1); }
             .sp-el-2 { decorator: image(elementicon-l-2); }
@@ -556,15 +557,70 @@ end)
                     <!-- Element chart: each element, what it is strong against and what it is weak against
                          (the same lists as the game's monster info tooltip) -->
                     <div id="sp-el-chart">
-                        <div class="sp-el-head"><span class="sp-el-name">Element</span><span class="sp-el-list strong">Strong vs</span><span class="sp-el-list weak">Weak vs</span></div>
-                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-1"></span><span class="sp-el-name elementicon-l-1">Sorcery</span><span class="sp-el-list"><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-7"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-8"></span></span></div>
-                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-2"></span><span class="sp-el-name elementicon-l-2">Fire</span><span class="sp-el-list"><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-8"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-6"></span><span class="sp-el-ic sp-el-7"></span></span></div>
-                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-3"></span><span class="sp-el-name elementicon-l-3">Water</span><span class="sp-el-list"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-2"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-7"></span><span class="sp-el-ic sp-el-8"></span></span></div>
-                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-4"></span><span class="sp-el-name elementicon-l-4">Earth</span><span class="sp-el-list"><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-6"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-8"></span></span></div>
-                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-5"></span><span class="sp-el-name elementicon-l-5">Wind</span><span class="sp-el-list"><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-7"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-6"></span></span></div>
-                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-6"></span><span class="sp-el-name elementicon-l-6">Holy</span><span class="sp-el-list"><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-8"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-7"></span></span></div>
-                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-7"></span><span class="sp-el-name elementicon-l-7">Poison</span><span class="sp-el-list"><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-6"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-5"></span></span></div>
-                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-8"></span><span class="sp-el-name elementicon-l-8">Ghost</span><span class="sp-el-list"><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-4"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-6"></span></span></div>
+                        <div class="sp-el-head">Elements</div>
+                        <div class="sp-el-block">
+                            <div class="sp-el-who"><span class="sp-el-ic big sp-el-5"></span><span class="sp-el-name elementicon-l-5">Wind</span></div>
+                            <div class="sp-el-lines">
+                                <div class="sp-el-line"><span class="sp-el-lbl strong">Strong</span><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-7"></span></div>
+                                <div class="sp-el-line"><span class="sp-el-lbl weak">Weak</span><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-6"></span></div>
+                            </div>
+                        </div>
+                        <div class="sp-el-block">
+                            <div class="sp-el-who"><span class="sp-el-ic big sp-el-4"></span><span class="sp-el-name elementicon-l-4">Earth</span></div>
+                            <div class="sp-el-lines">
+                                <div class="sp-el-line"><span class="sp-el-lbl strong">Strong</span><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-6"></span></div>
+                                <div class="sp-el-line"><span class="sp-el-lbl weak">Weak</span><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-8"></span></div>
+                            </div>
+                        </div>
+                        <div class="sp-el-block">
+                            <div class="sp-el-who"><span class="sp-el-ic big sp-el-2"></span><span class="sp-el-name elementicon-l-2">Fire</span></div>
+                            <div class="sp-el-lines">
+                                <div class="sp-el-line"><span class="sp-el-lbl strong">Strong</span><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-8"></span></div>
+                                <div class="sp-el-line"><span class="sp-el-lbl weak">Weak</span><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-6"></span><span class="sp-el-ic sp-el-7"></span></div>
+                            </div>
+                        </div>
+                        <div class="sp-el-block">
+                            <div class="sp-el-who"><span class="sp-el-ic big sp-el-3"></span><span class="sp-el-name elementicon-l-3">Water</span></div>
+                            <div class="sp-el-lines">
+                                <div class="sp-el-line"><span class="sp-el-lbl strong">Strong</span><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-2"></span></div>
+                                <div class="sp-el-line"><span class="sp-el-lbl weak">Weak</span><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-7"></span><span class="sp-el-ic sp-el-8"></span></div>
+                            </div>
+                        </div>
+                        <div class="sp-el-block">
+                            <div class="sp-el-who"><span class="sp-el-ic big sp-el-0"></span><span class="sp-el-name elementicon-l-0">Neutral</span></div>
+                            <div class="sp-el-lines">
+                                <div class="sp-el-line"><span class="sp-el-lbl strong">Strong</span><span class="sp-el-none">None</span></div>
+                                <div class="sp-el-line"><span class="sp-el-lbl weak">Weak</span><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-8"></span><span class="sp-el-ic sp-el-6"></span><span class="sp-el-ic sp-el-7"></span></div>
+                            </div>
+                        </div>
+                        <div class="sp-el-block">
+                            <div class="sp-el-who"><span class="sp-el-ic big sp-el-7"></span><span class="sp-el-name elementicon-l-7">Poison</span></div>
+                            <div class="sp-el-lines">
+                                <div class="sp-el-line"><span class="sp-el-lbl strong">Strong</span><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-6"></span></div>
+                                <div class="sp-el-line"><span class="sp-el-lbl weak">Weak</span><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-5"></span></div>
+                            </div>
+                        </div>
+                        <div class="sp-el-block">
+                            <div class="sp-el-who"><span class="sp-el-ic big sp-el-1"></span><span class="sp-el-name elementicon-l-1">Sorcery</span></div>
+                            <div class="sp-el-lines">
+                                <div class="sp-el-line"><span class="sp-el-lbl strong">Strong</span><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-7"></span></div>
+                                <div class="sp-el-line"><span class="sp-el-lbl weak">Weak</span><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-8"></span></div>
+                            </div>
+                        </div>
+                        <div class="sp-el-block">
+                            <div class="sp-el-who"><span class="sp-el-ic big sp-el-8"></span><span class="sp-el-name elementicon-l-8">Ghost</span></div>
+                            <div class="sp-el-lines">
+                                <div class="sp-el-line"><span class="sp-el-lbl strong">Strong</span><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-4"></span></div>
+                                <div class="sp-el-line"><span class="sp-el-lbl weak">Weak</span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-6"></span></div>
+                            </div>
+                        </div>
+                        <div class="sp-el-block">
+                            <div class="sp-el-who"><span class="sp-el-ic big sp-el-6"></span><span class="sp-el-name elementicon-l-6">Holy</span></div>
+                            <div class="sp-el-lines">
+                                <div class="sp-el-line"><span class="sp-el-lbl strong">Strong</span><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-8"></span></div>
+                                <div class="sp-el-line"><span class="sp-el-lbl weak">Weak</span><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-7"></span></div>
+                            </div>
+                        </div>
                     </div>
                     <div id="sp-pad-options">
                         <span id="sp-pad-close">x</span>
