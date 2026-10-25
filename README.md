@@ -2,9 +2,12 @@
 
 While the minimap is minimized, an empty see-through window sits under the zone name and time. Clicks go straight through it to the game.
 
+Inside it is an **element chart**: each element (Sorcery, Fire, Water, Earth, Wind, Holy, Poison, Ghost) with the icons of the elements it is strong against and weak against, taken from the game's own monster info.
+
 Press the small gear on it for its settings:
 - **Opacity**: 0% is fully clear, 100% is solid.
 - **Height**.
+- **Show element chart** on or off.
 
 Settings are saved in `sp_minimap_window.txt` in the game folder.
 

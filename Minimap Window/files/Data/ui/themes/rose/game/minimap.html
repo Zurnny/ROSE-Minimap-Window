@@ -3,6 +3,7 @@
     <head>
         <title></title>
         <link type="text/template" href="../templates/window-resizeable.html" />
+        <link type="text/rcss" href="../styles/spritesheet_elementicon.css" />
 
         <style>
             body {
@@ -439,17 +440,43 @@
             #sp-pad-options .sp-pad-row { display: block; margin-top: 4dp; }
             #sp-pad-options .sp-pad-row input.range { width: 100%; }
             #sp-pad-options .sp-pad-val { color: #ccc; }
+            /* element chart */
+            #sp-el-chart { display: block; padding: 6dp 6dp 4dp 6dp; font-size: 11dp; color: white; font-effect: outline(1dp black); }
+            #sp-pad.no-chart #sp-el-chart { display: none; }
+            .sp-el-head, .sp-el-row { display: flex; flex-direction: row; align-items: center; height: 18dp; }
+            .sp-el-head { height: 16dp; font-weight: 800; color: #ccc; margin-right: 22dp; }   /* clear of the gear */
+            .sp-el-name { width: 66dp; flex-shrink: 0; font-weight: 800; white-space: nowrap; overflow: hidden; }
+            .sp-el-row .sp-el-name { width: 48dp; }
+            .sp-el-list { display: flex; flex-direction: row; align-items: center; width: 64dp; flex-shrink: 0; }
+            .sp-el-list + .sp-el-list { width: 52dp; }
+            .sp-el-name.elementicon-l-4 { color: rgb(200, 140, 80); }   /* Earth: the game's brown is too dark here */
+            .sp-el-name.elementicon-l-8 { color: rgb(170, 170, 170); }
+            .sp-el-head .sp-el-list.strong { width: 64dp; }
+            .sp-el-head .sp-el-list.strong { color: rgb(110, 230, 110); }
+            .sp-el-head .sp-el-list.weak { color: rgb(255, 100, 90); }
+            .sp-el-ic { display: inline-block; width: 15dp; height: 14dp; margin-right: 1dp; flex-shrink: 0; }
+            .sp-el-ic.big { width: 17dp; height: 16dp; margin-right: 3dp; }
+            .sp-el-0 { decorator: image(elementicon-l-0); }
+            .sp-el-1 { decorator: image(elementicon-l-1); }
+            .sp-el-2 { decorator: image(elementicon-l-2); }
+            .sp-el-3 { decorator: image(elementicon-l-3); }
+            .sp-el-4 { decorator: image(elementicon-l-4); }
+            .sp-el-5 { decorator: image(elementicon-l-5); }
+            .sp-el-6 { decorator: image(elementicon-l-6); }
+            .sp-el-7 { decorator: image(elementicon-l-7); }
+            .sp-el-8 { decorator: image(elementicon-l-8); }
             #sp-pad-close { position: absolute; right: 4dp; top: 4dp; cursor: hand; color: #ccc; font-weight: 800; }
             #sp-pad-close:hover { color: white; }
         </style>
         <script>
 -- Minimap Window (add-on). While the minimap is minimized, an empty see-through
--- window sits under the zone name and time. The gear on it opens a small panel
+-- window sits under the zone name and time, with an element chart (each
+-- element, what it is strong and weak against - the game's monster info lists). The gear on it opens a small panel
 -- to set its opacity (0% = clear, 100% = solid) and height. Saved in sp_minimap_window.txt.
 pcall(function()
     local document = document
     local FILE = 'sp_minimap_window.txt'
-    local cfg = {alpha = 40, height = 120, width = 206}   -- alpha: 0 = clear .. 100 = solid
+    local cfg = {alpha = 40, height = 190, width = 206, chart = 1}   -- alpha: 0 = clear .. 100 = solid
     pcall(function()
         local f = io.open(FILE, 'r')
         if not f then return end
@@ -466,7 +493,7 @@ pcall(function()
         pcall(function()
             local f = io.open(FILE, 'w')
             if not f then return end
-            f:write('alpha=', cfg.alpha, '\nheight=', cfg.height, '\n')
+            f:write('alpha=', cfg.alpha, '\nheight=', cfg.height, '\nchart=', cfg.chart, '\n')
             f:close()
         end)
     end
@@ -481,6 +508,7 @@ pcall(function()
         pad.style['background-color'] = 'rgba(0, 0, 0, ' .. a .. ')'
         pad.style['border-color'] = 'rgba(150, 150, 150, ' .. math.max(40, a) .. ')'
         pad.style.height = cfg.height .. 'dp'
+        pad:SetClass('no-chart', cfg.chart == 0)
         set_text('sp-pad-alpha-val', string.format('%d%%', cfg.alpha))
         set_text('sp-pad-height-val', string.format('%d', cfg.height))
     end
@@ -495,6 +523,14 @@ pcall(function()
     end
     hook_slider('sp-pad-alpha', 'alpha')
     hook_slider('sp-pad-height', 'height')
+    local box = el('sp-pad-chart')
+    if box then
+        if cfg.chart == 0 then box:RemoveAttribute('checked') else box:SetAttribute('checked', '') end
+        box:AddEventListener('change', function()
+            cfg.chart = box:HasAttribute('checked') and 1 or 0
+            apply(); save()
+        end)
+    end
     local gear, panel = el('sp-pad-gear'), el('sp-pad-options')
     if gear and panel then
         gear:AddEventListener('click', function(ev)
@@ -520,13 +556,27 @@ end)
                 <!-- Minimap Window add-on: empty see-through window; the gear opens its settings -->
                 <div id="sp-pad">
                     <button id="sp-pad-gear"></button>
+                    <!-- Element chart: each element, what it is strong against and what it is weak against
+                         (the same lists as the game's monster info tooltip) -->
+                    <div id="sp-el-chart">
+                        <div class="sp-el-head"><span class="sp-el-name">Element</span><span class="sp-el-list strong">Strong vs</span><span class="sp-el-list weak">Weak vs</span></div>
+                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-1"></span><span class="sp-el-name elementicon-l-1">Sorcery</span><span class="sp-el-list"><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-7"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-8"></span></span></div>
+                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-2"></span><span class="sp-el-name elementicon-l-2">Fire</span><span class="sp-el-list"><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-8"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-6"></span><span class="sp-el-ic sp-el-7"></span></span></div>
+                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-3"></span><span class="sp-el-name elementicon-l-3">Water</span><span class="sp-el-list"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-2"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-7"></span><span class="sp-el-ic sp-el-8"></span></span></div>
+                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-4"></span><span class="sp-el-name elementicon-l-4">Earth</span><span class="sp-el-list"><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-6"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-8"></span></span></div>
+                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-5"></span><span class="sp-el-name elementicon-l-5">Wind</span><span class="sp-el-list"><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-7"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-6"></span></span></div>
+                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-6"></span><span class="sp-el-name elementicon-l-6">Holy</span><span class="sp-el-list"><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-8"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-7"></span></span></div>
+                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-7"></span><span class="sp-el-name elementicon-l-7">Poison</span><span class="sp-el-list"><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-6"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-5"></span></span></div>
+                        <div class="sp-el-row"><span class="sp-el-ic big sp-el-8"></span><span class="sp-el-name elementicon-l-8">Ghost</span><span class="sp-el-list"><span class="sp-el-ic sp-el-0"></span><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-4"></span></span><span class="sp-el-list"><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-6"></span></span></div>
+                    </div>
                     <div id="sp-pad-options">
                         <span id="sp-pad-close">x</span>
                         <span class="sp-pad-title">Window settings</span>
                         <div class="sp-pad-row">Opacity: <span class="sp-pad-val" id="sp-pad-alpha-val">40%</span></div>
                         <input id="sp-pad-alpha" type="range" min="0" max="100" step="5" value="40" />
-                        <div class="sp-pad-row">Height: <span class="sp-pad-val" id="sp-pad-height-val">120</span></div>
-                        <input id="sp-pad-height" type="range" min="30" max="400" step="10" value="120" />
+                        <div class="sp-pad-row">Height: <span class="sp-pad-val" id="sp-pad-height-val">190</span></div>
+                        <input id="sp-pad-height" type="range" min="30" max="400" step="10" value="190" />
+                        <div class="sp-pad-row"><input id="sp-pad-chart" type="checkbox" checked="" /><label for="sp-pad-chart">Show element chart</label></div>
                     </div>
                 </div>
             </div>
