@@ -8,9 +8,9 @@
         <link type="text/rcss" href="../styles/sp_addons_steampunk.css" />
 
         <style>
-            /* ==== Parts of the page for one look only ==== */
-            .sp-only-steampunk { display: none; }
-            .sp-theme-steampunk .sp-only-default { display: none; }
+            /* ==== Parts of the page for one look only (the other look's part stays hidden) ==== */
+            .sp-theme-default .sp-only-steampunk { display: none !important; }
+            .sp-theme-steampunk .sp-only-default { display: none !important; }
 
             /* ==== Both looks ==== */
             .hidden { display: none; }
@@ -37,6 +37,7 @@
             #sp-pad-options .sp-pad-row { display: block; margin-top: 4dp; }
             #sp-pad-options .sp-pad-row input.range { width: 100%; }
             #sp-pad-options .sp-pad-val { color: #ccc; }
+            #sp-el-chart { display: block; padding: 4dp 6dp 4dp 6dp; font-size: 11dp; color: white; font-effect: outline(1dp black); }
             #sp-pad.no-chart #sp-el-chart { display: none; }
             .sp-el-who { display: flex; flex-direction: row; align-items: center; width: 66dp; flex-shrink: 0; }
             .sp-el-name { font-weight: 800; white-space: nowrap; }
@@ -106,7 +107,6 @@
             .sp-theme-default .minimap-tooltip-left { top: 50%; left: 0; transform: translate(-100%, -50%); margin-left: -4dp; width: 100dp; }
             .sp-theme-default #time-tooltip { width: 200dp; bottom: -400%; left: 50%; transform: translateX(-50%); margin-bottom: 4dp; font-size: 13dp; text-align: left; }
             .sp-theme-default .time-tooltip-label { color: #90c8ff; }
-            .sp-theme-default #sp-el-chart { display: block; padding: 4dp 6dp 4dp 6dp; font-size: 11dp; color: white; font-effect: outline(1dp black); }
             .sp-theme-default .sp-el-row { display: flex; flex-direction: row; align-items: center; height: 18dp; border-top: 1dp rgba(150, 150, 150, 50); }
             .sp-theme-default .sp-el-head { border-top: 0; font-weight: 800; color: yellow; height: 20dp; }
             .sp-theme-default .sp-el-head .sp-el-col.strong { color: rgb(110, 230, 110); }
@@ -126,8 +126,8 @@
             .sp-theme-steampunk #minimap-minimized #zone-name-min { position: absolute; left: 8dp; top: 4dp; width: 150dp; height: 18dp; font-weight: 800; font-effect: outline(1dp black); color: rgb(243, 211, 138); text-align: center; overflow: hidden; white-space: nowrap; }
             .sp-theme-steampunk #minimap-minimized #time-min { position: absolute; left: 43dp; top: 21dp; width: 80dp; height: 14dp; font-size: 12dp; color: rgb(226, 208, 170); font-effect: outline(1dp black); text-align: center; }
             .sp-theme-steampunk #minimap-minimized .day-night-icon-min { position: absolute; right: 40dp; top: 2dp; }
-            .sp-theme-steampunk #sp-el-chart { position: absolute; left: -2dp; top: 42dp; width: 210dp; box-sizing: border-box; padding: 4dp 6dp 5dp 6dp; background-color: rgba(30, 24, 19, 215); border: 2dp rgb(180, 138, 69); border-top-width: 0dp; font-size: 11dp; color: rgb(241, 227, 196); font-effect: outline(1dp black); pointer-events: none; }
-            .sp-theme-steampunk #sp-el-chart.off { display: none; }
+            .sp-theme-steampunk #sp-el-chart-sp { position: absolute; left: -2dp; top: 42dp; width: 210dp; box-sizing: border-box; padding: 4dp 6dp 5dp 6dp; background-color: rgba(30, 24, 19, 215); border: 2dp rgb(180, 138, 69); border-top-width: 0dp; font-size: 11dp; color: rgb(241, 227, 196); font-effect: outline(1dp black); pointer-events: none; }
+            .sp-theme-steampunk #sp-el-chart-sp.off { display: none; }
             .sp-theme-steampunk .sp-el-row { display: flex; flex-direction: row; align-items: center; height: 18dp; border-top: 1dp rgba(180, 138, 69, 70); }
             .sp-theme-steampunk .sp-el-head { border-top: 0; height: 18dp; font-weight: 800; color: rgb(243, 211, 138); }
             .sp-theme-steampunk .sp-el-head .sp-el-col.strong { color: rgb(150, 220, 110); }
@@ -241,11 +241,7 @@ pcall(function()
         body:SetClass('sp-theme-default', not sp)
         body:SetClass('sp-theme-steampunk', sp)
     end
-    -- parts written for the other look are taken out, so only one of each is left
-    local gone, list = {}, document:QuerySelectorAll(sp and '.sp-only-default' or '.sp-only-steampunk')
-    local i = list[0] and 0 or 1
-    while list[i] do gone[#gone + 1] = list[i]; i = i + 1 end
-    for _, e in ipairs(gone) do pcall(function() e.parent_node:RemoveChild(e) end) end
+    -- (parts written for the other look stay in the window, hidden)
 end)
         </script>
         <script>
@@ -431,7 +427,7 @@ pcall(function()
         return v
     end
     local function apply()
-        local c = document:GetElementById('sp-el-chart')
+        local c = document:GetElementById('sp-el-chart-sp')
         if c then c:SetClass('off', not on()) end
     end
     apply()
@@ -556,7 +552,7 @@ end)
                     </div>
                 </div>
                 <!-- Element chart (steampunk add-on): shown under the minimized bar; Options > UI turns it off -->
-                <div class="sp-only-steampunk" id="sp-el-chart">
+                <div class="sp-only-steampunk" id="sp-el-chart-sp">
                     <div class="sp-el-row sp-el-head"><div class="sp-el-who"><span>Element</span></div><div class="sp-el-col strong"><span>Strong</span></div><div class="sp-el-split"></div><div class="sp-el-col weak"><span>Weak</span></div></div>
                     <div class="sp-el-row"><div class="sp-el-who"><span class="sp-el-ic big sp-el-5"></span><span class="sp-el-name elementicon-l-5">Wind</span></div><div class="sp-el-col"><span class="sp-el-ic sp-el-3"></span><span class="sp-el-ic sp-el-7"></span></div><div class="sp-el-split"></div><div class="sp-el-col"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-4"></span><span class="sp-el-ic sp-el-6"></span></div></div>
                     <div class="sp-el-row"><div class="sp-el-who"><span class="sp-el-ic big sp-el-4"></span><span class="sp-el-name elementicon-l-4">Earth</span></div><div class="sp-el-col"><span class="sp-el-ic sp-el-5"></span><span class="sp-el-ic sp-el-6"></span></div><div class="sp-el-split"></div><div class="sp-el-col"><span class="sp-el-ic sp-el-1"></span><span class="sp-el-ic sp-el-2"></span><span class="sp-el-ic sp-el-8"></span></div></div>
