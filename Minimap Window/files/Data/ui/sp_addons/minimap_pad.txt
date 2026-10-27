@@ -1,0 +1,2 @@
+minimap_pad
+; Marks the Minimap Window add-on as installed. Removed again with the add-on.
