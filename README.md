@@ -4,7 +4,7 @@ A see-through window with an element chart under the minimized minimap.
 
 While the minimap is minimized, a see-through window sits under the zone name and time with an element chart: every element with the elements it is strong and weak against. Its gear opens a small panel for opacity and the chart. Switch: Options > UI > Add-ons.
 
-An add-on for [ROSE Mod Launcher](https://github.com/Zurnny/Rose_Mod_Launcher), for the game's **default** UI.
+An add-on for [ROSE Mod Launcher](https://github.com/Zurnny/Rose_Mod_Launcher), for the game's default UI and the Steampunk UI theme. Without the launcher, copy the `Data` folder from `files` into your ROSE Online folder.
 
 ## Install
 1. Download this repo (Code > Download ZIP) and open it.
@@ -22,12 +22,17 @@ add-on is installed: each add-on puts a small marker file in
 In **Options > UI > Add-ons** each installed add-on adds its own line, one
 under the other, in the order they are listed there.
 
+## Default UI or Steampunk
+Each window it changes holds both looks: the game's own and the [Steampunk UI](https://github.com/Zurnny/SteamPunk) theme's. When the window opens it checks whether Steampunk is installed (`styles/steampunk.css`) and uses that look, so it works with either one, with or without the launcher. With Steampunk, the Steampunk theme's own features stay on too.
+
 The switches are saved in `sp_addons.txt` in the ROSE Online folder. The Ice UI
 theme uses the same file; both keep each other's settings.
 
 ## Files it changes
 - `Data/ui/themes/rose/game/minimap.html`
 - `Data/ui/themes/rose/game/options_bgfx.html`
+- `Data/ui/themes/rose/styles/sp_addons_steampunk.css` (Steampunk look, shared by the add-ons)
+- `Data/ui/themes/rose/styles/sp_addons_steampunk_sprites.css` (Steampunk look, shared by the add-ons)
 - `Data/ui/sp_addons/minimap_pad.txt` (marker)
 
 Turning it off in the launcher puts the game's own files back.
