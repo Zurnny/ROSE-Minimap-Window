@@ -1,8 +1,8 @@
 ; Update list for Minimap Window. Upload this next to mod.ini and the files folder.
-version=1.12
-d9b1bbafc8b3e3b61769c377817399b92a00c255|mod.ini
+version=1.13
+7e2d6061a673989f78cd5236628e365bb692a9e4|mod.ini
 e7778417c51592e245cbb952bb43932f03da3744|files/Data/ui/sp_addons/minimap_pad.txt
-706508ce59f53452846436664fe259df4c81b7e1|files/Data/ui/themes/rose/game/minimap.html
+bbd4e73222a6c0d0e68e461a1eed508c0aa582a0|files/Data/ui/themes/rose/game/minimap.html
 cfe4c3a63e20ee55e3b512b3366654398eafeeed|files/Data/ui/themes/rose/game/options_bgfx.html
 c9735755117dd4fa76a010d9d13085fefdd2dfb1|files/Data/ui/themes/rose/styles/sp_addons_steampunk.css
 80a26b6252e1b6dde9cd64c23911e2d2adae0d54|files/Data/ui/themes/rose/styles/sp_addons_steampunk_sprites.css
