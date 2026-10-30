@@ -1,8 +1,11 @@
 ; Update list for Minimap Window. Upload this next to mod.ini and the files folder.
-version=1.15
-45432583ab072c5f2311987864481b741da795fb|mod.ini
+version=1.16
+2390d42686204d064d88b8730ebf26d3922c494e|mod.ini
 e7778417c51592e245cbb952bb43932f03da3744|files/Data/ui/sp_addons/minimap_pad.txt
+f73e3ff2449c21cd26b382a0d965ad68ce2c7387|files/Data/ui/themes/rose/game/menu.html
 bbd4e73222a6c0d0e68e461a1eed508c0aa582a0|files/Data/ui/themes/rose/game/minimap.html
-9419a051950bc7a749862d6ba19d7b93e64390fa|files/Data/ui/themes/rose/game/options_bgfx.html
+4afc0dd827e57b69b5a89fb34676c6c7ec0f575a|files/Data/ui/themes/rose/game/options_bgfx.html
+ed2fbfb375ff419cb5031dcd9a8dbbf668f25caa|files/Data/ui/themes/rose/game/sp_addons_window.html
+105de6beaf0577b9a401f1efb47ffe1dedb522e2|files/Data/ui/themes/rose/imgs/sp_addons_menu.dds
 c9735755117dd4fa76a010d9d13085fefdd2dfb1|files/Data/ui/themes/rose/styles/sp_addons_steampunk.css
-0284ef27b24d89b2dfa20d4956773d170fd06ef1|files/Data/ui/themes/rose/styles/sp_addons_steampunk_sprites.css
+d91eeca9018f74fcc0129e8769899178111feb8f|files/Data/ui/themes/rose/styles/sp_addons_steampunk_sprites.css
