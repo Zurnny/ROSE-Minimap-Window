@@ -2,7 +2,7 @@
 
 A see-through window with an element chart under the minimized minimap.
 
-While the minimap is minimized, a see-through window sits under the zone name and time with an element chart: every element with the elements it is strong and weak against. Its gear opens a small panel for opacity and the chart. Switch: the Add-ons button in the menu.
+A compass ring round the minimap (N, E, S and W), with its own switch, and "Turn map with player" in the Add-ons window turns the map and the compass so the way you face is always up. While the minimap is minimized, a see-through window sits under the zone name and time with an element chart: every element with the elements it is strong and weak against. Its gear opens a small panel for opacity and the chart. Switch: the Add-ons button in the menu.
 
 An add-on for [ROSE Mod Launcher](https://github.com/Zurnny/Rose_Mod_Launcher), for the game's default UI and the Steampunk UI theme. Without the launcher, copy the `Data` folder from `files` into your ROSE Online folder.
 
@@ -40,5 +40,6 @@ theme uses the same file; both keep each other's settings.
 - `Data/ui/themes/rose/styles/sp_addons_steampunk_sprites.css` (Steampunk look, shared by the add-ons)
 - `Data/ui/themes/rose/imgs/sp_addons_menu.dds` (the Add-ons button, default UI)
 - `Data/ui/sp_addons/minimap_pad.txt` (marker)
+- `Data/ui/sp_addons/minimap_compass.txt` (marker)
 
 Turning it off in the launcher puts the game's own files back.

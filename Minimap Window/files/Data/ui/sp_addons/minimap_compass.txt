@@ -1,0 +1,2 @@
+minimap_compass
+; Marks the Minimap Window (compass) add-on as installed. Removed again with the add-on.
